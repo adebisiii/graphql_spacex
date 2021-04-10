@@ -57,7 +57,10 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Update User"),
+        title: Text(
+          "Update User",
+          style: TextStyle(color: Colors.blueGrey),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),

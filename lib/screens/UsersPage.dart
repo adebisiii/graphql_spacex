@@ -25,7 +25,9 @@ class _UsersPageState extends State<UsersPage> {
   @override
   Widget build(BuildContext context) {
     return Query(
-      options: QueryOptions(document: gql(_query)),
+      options: QueryOptions(
+          document: gql(_query),
+          cacheRereadPolicy: CacheRereadPolicy.mergeOptimistic),
       builder: (
         QueryResult result, {
         VoidCallback refetch,

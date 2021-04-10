@@ -2,6 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class AddUserScreen extends StatefulWidget {
+  final String name;
+  final String rocket;
+  final String twitter;
+
+  const AddUserScreen({
+    Key key,
+    this.name,
+    this.rocket,
+    this.twitter,
+  }) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _AddUserScreenState();
@@ -39,7 +50,10 @@ class _AddUserScreenState extends State<AddUserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New User"),
+        title: Text(
+          "Add New User",
+          style: TextStyle(color: Colors.blueGrey),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -65,8 +79,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
             child: Mutation(
               options: MutationOptions(
                 document: gql(insertUser()),
-                fetchPolicy: FetchPolicy.noCache,
-                onCompleted: (data) => Navigator.pop(context, true),
+                onCompleted: (data) {
+                  Navigator.pop(context, true);
+                },
               ),
               builder: (
                 RunMutation runMutation,
@@ -143,6 +158,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                               ),
                             )
                           : TextButton(
+                              style: ButtonStyle(),
                               onPressed: () {
                                 if (_formKey.currentState.validate()) {
                                   setState(() {

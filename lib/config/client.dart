@@ -6,9 +6,12 @@ class Config {
 
   static ValueNotifier<GraphQLClient> initailizeClient() {
     ValueNotifier<GraphQLClient> client = ValueNotifier(GraphQLClient(
-      cache: GraphQLCache(store: HiveStore()),
-      link: httpLink,
-    ));
+        cache: GraphQLCache(store: HiveStore()),
+        link: httpLink,
+        defaultPolicies: DefaultPolicies(
+            watchQuery: Policies(
+          fetch: FetchPolicy.cacheAndNetwork,
+        ))));
     return client;
   }
 }

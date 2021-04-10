@@ -25,7 +25,10 @@ class _MyHomePageState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("SpaceX Land"),
+        title: Text(
+          "SpaceX Land",
+          style: TextStyle(color: Colors.blueGrey),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
