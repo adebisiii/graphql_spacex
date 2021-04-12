@@ -28,6 +28,7 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
   final _twitterController = TextEditingController();
 
   bool _isUpdating = false;
+  VoidCallback refetch;
 
   String _updateUser() {
     return """
@@ -86,7 +87,13 @@ class _UpdateUserScreenState extends State<UpdateUserScreen> {
             child: Mutation(
               options: MutationOptions(
                 document: gql(_updateUser()),
-                onCompleted: (data) => Navigator.pop(context, true),
+                update: (GraphQLDataProxy cache, QueryResult result) {
+                  return cache;
+                },
+                onCompleted: (data) {
+                  refetch();
+                  Navigator.pop(context, true);
+                },
               ),
               builder: (
                 RunMutation runMutation,

@@ -26,8 +26,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
   final _twitterController = TextEditingController();
 
   bool _isSaving = false;
+  VoidCallback refetchQuery;
 
-  String insertUser() {
+  String _insertUser() {
     return """
     mutation insertUser(\$name: String!, \$rocket: String!, \$twitter: String!) {
       insert_users(objects: {
@@ -78,11 +79,18 @@ class _AddUserScreenState extends State<AddUserScreen> {
             ),
             child: Mutation(
               options: MutationOptions(
-                document: gql(insertUser()),
-                onCompleted: (data) {
-                  Navigator.pop(context, true);
-                },
-              ),
+                  document: gql(_insertUser()),
+                  onCompleted: (data) {
+                    refetchQuery();
+                    Navigator.pop(context, true);
+                  },
+                  update: (GraphQLDataProxy cache, QueryResult result) {
+                    if (result.hasException) {
+                      print(result.exception);
+                    } else {
+                      print(result.data);
+                    }
+                  }),
               builder: (
                 RunMutation runMutation,
                 QueryResult result,

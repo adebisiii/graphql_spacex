@@ -22,15 +22,17 @@ class _UsersPageState extends State<UsersPage> {
   }
 """;
 
+
+
   @override
   Widget build(BuildContext context) {
     return Query(
       options: QueryOptions(
-          document: gql(_query),
-          cacheRereadPolicy: CacheRereadPolicy.mergeOptimistic),
+        document: gql(_query),
+      ),
       builder: (
         QueryResult result, {
-        VoidCallback refetch,
+        Future<QueryResult> Function() refetch,
         FetchMore fetchMore,
       }) {
         if (result.isLoading) {
